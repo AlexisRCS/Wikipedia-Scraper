@@ -7,7 +7,8 @@ import json
 cache = {}
 def hashable_cache(f):
     """
-    the function hashable_cache is a decorator, it will speed up the browsing trough wikipedia by using some session memory and previous results cache memory, it has 1 argument (f)
+    the function hashable_cache is a decorator, it will speed up the browsing trough wikipedia 
+    by using some session memory and previous results cache memory, it has 1 argument (f).
 
     argument :
         f = the browsing function to speed up, the function f has to be construct with 2 arguments (url,session)
@@ -25,7 +26,12 @@ def hashable_cache(f):
 @hashable_cache
 def get_first_paragraph(wikipedia_url,session) :
     """
-  
+    the function get_first_paragraph will extract the first paragraph from a wikipedia page 
+    by analyzing htlm data, it has 2 arguments (wikipedia_url and session).
+
+    argument :
+        wikipedia_url = the url of the wikipedia page to scrape
+        session = request.Session() an object that contain usefull data to improve browsing
     """
     wikipedia_content = session.get(wikipedia_url).text
     wikipedia_soup = BeautifulSoup(wikipedia_content, "html.parser")
@@ -42,7 +48,9 @@ def get_first_paragraph(wikipedia_url,session) :
 
 def get_leaders() :
     """
-
+    the function get_leaders will extract data from the site : https://country-leaders.herokuapp.com, navigate inside these data 
+    in order to find the leaders wikipedia urls (extract the first paragraph trough the get_first_paragraph function) 
+    and compile all the data inside a dictionary as an output (return).
     """
     cookies_url = "https://country-leaders.herokuapp.com/cookie"
     countries_url = "https://country-leaders.herokuapp.com/countries"
@@ -65,7 +73,7 @@ def get_leaders() :
 
 def save() :
     """
-  
+    the function save() will save the output of the get_leaders function in leaders.json file and also save the cache in cache.json file 
     """
     with open("leaders.json", "w") as my_file:
         json.dump(get_leaders(),my_file)
